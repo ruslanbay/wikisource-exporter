@@ -1,5 +1,3 @@
-https://github.com/wikimedia/ws-export
-
 # WikiSource Exporter
 
 [![GitHub release](https://img.shields.io/github/v/release/ruslanbay/wikisource-exporter)](https://github.com/ruslanbay/wikisource-exporter/releases)
