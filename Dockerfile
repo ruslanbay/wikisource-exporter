@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 
 # Build arguments for metadata
-ARG BUILD_DATE="2025-03-12T18:51:07Z"
+ARG BUILD_DATE="2025-03-12T18:58:36Z"
 ARG BUILD_VERSION="3.1.0"
 ARG GITHUB_USER="ruslanbay"
 
@@ -44,12 +44,12 @@ RUN git clone --depth 1 --branch ${BUILD_VERSION} https://github.com/wikimedia/w
 RUN printf '#!/bin/sh\n\
 mkdir -p /github/workspace/output\n\
 php ./bin/console app:export \\\n\
-  $([ "$4" = "true" ] && echo "--nocredits") \\\n\
-  $([ "$5" = "true" ] && echo "--nocache") \\\n\
+  --title "$1" \\\n\
   --lang "$2" \\\n\
   --format "$3" \\\n\
-  --title "$1" \\\n\
-  --output "/github/workspace/output/" \n\
+  --path "/github/workspace/output/" \\\n\
+  $([ "$4" = "true" ] && echo "--nocredits") \\\n\
+  $([ "$5" = "true" ] && echo "--nocache")\n\
 echo "output-path=/github/workspace/output" >> $GITHUB_OUTPUT\n' > /entrypoint.sh && \
     chmod +x /entrypoint.sh
 

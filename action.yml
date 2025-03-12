@@ -31,25 +31,12 @@ outputs:
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/ruslanbay/wikisource-exporter:latest'
-  env:
-    INPUT_TITLE: ${{ inputs.title }}
-    INPUT_LANG: ${{ inputs.lang }}
-    INPUT_FORMAT: ${{ inputs.format }}
-    INPUT_NOCREDITS: ${{ inputs.nocredits }}
-    INPUT_NOCACHE: ${{ inputs.nocache }}
-  entrypoint: '/bin/sh'
   args:
-    - -c
-    - |
-      mkdir -p /github/workspace/output && \
-      php ./bin/console app:export \
-        ${INPUT_NOCREDITS} == 'true' && '--nocredits' || '' \
-        ${INPUT_NOCACHE} == 'true' && '--nocache' || '' \
-        --lang "${INPUT_LANG}" \
-        --format "${INPUT_FORMAT}" \
-        --title "${INPUT_TITLE}" \
-        --path "/github/workspace/output/" && \
-      echo "output-path=/github/workspace/output" >> "$GITHUB_OUTPUT"
+    - ${{ inputs.title }}
+    - ${{ inputs.lang }}
+    - ${{ inputs.format }}
+    - ${{ inputs.nocredits }}
+    - ${{ inputs.nocache }}
 
 branding:
   icon: 'book'
