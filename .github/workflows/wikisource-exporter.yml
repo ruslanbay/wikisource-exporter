@@ -1,0 +1,58 @@
+name: WikiSource Exporter
+description: 'WS Export is a tool for exporting Wikisource documents to many formats, such as EPUB or PDF'
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 'Page title (e.g. Constitution_of_the_United_States_of_America)'
+        required: true
+        default: 'Constitution_of_the_United_States_of_America'
+      lang:
+        description: 'Language code'
+        required: true
+        default: 'en'
+        type: choice
+        options: ['ru', 'en', 'de', 'fr']
+      format:
+        description: 'Output format'
+        required: true
+        default: 'txt'
+        type: choice
+        options: ['txt', 'epub', 'pdf']
+      nocredits:
+        description: 'Do not include the credits list in the exported document'
+        required: false
+        default: true
+        type: boolean
+      nocache:
+        description: 'Do not cache anything (re-fetch all data)'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create output directory
+        run: |
+          mkdir -p output
+          chmod 777 output
+
+      - name: Export document
+        id: export
+        uses: ruslanbay/wikisource-exporter@3.1.0
+        with:
+          title: ${{ inputs.title }}
+          lang: ${{ inputs.lang }}
+          format: ${{ inputs.format }}
+          nocredits: ${{ inputs.nocredits }}
+          nocache: ${{ inputs.nocache }}
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: wikisource-exporter-artifact
+          path: output
+          if-no-files-found: error
