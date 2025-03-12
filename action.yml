@@ -23,6 +23,11 @@ inputs:
     required: false
     default: 'false'
 
+outputs:
+  output-path:
+    description: 'Path to the exported document'
+    value: '/github/workspace/output'
+
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/ruslanbay/wikisource-exporter:latest'
@@ -37,7 +42,8 @@ runs:
         --lang "${{ inputs.lang }}" \
         --format "${{ inputs.format }}" \
         --title "${{ inputs.title }}" \
-        --path "/github/workspace/output/"
+        --path "/github/workspace/output/" && \
+      echo "output-path=/github/workspace/output" >> "$GITHUB_OUTPUT"
 
 branding:
   icon: 'book'
