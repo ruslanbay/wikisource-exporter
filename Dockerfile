@@ -25,16 +25,16 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-# Clone specific version of ws-export
+# Clone specific version of ws-export and setup the application
 RUN git clone --depth 1 --branch 3.1.0 https://github.com/wikimedia/ws-export.git . && \
     # Install composer dependencies
     composer install --no-dev --no-interaction --prefer-dist && \
     # Setup database directory
     mkdir -p var && \
     chmod 777 var && \
-    # Setup configuration
-    cp config/config.dist.json config/config.json && \
-    sed -i 's/"database_url": ".*"/"database_url": "sqlite:\/\/%kernel.project_dir%\/var\/app.db"/' config/config.json
+    # Setup environment configuration
+    cp .env .env.local && \
+    sed -i 's#DATABASE_URL=.*#DATABASE_URL=sqlite://%kernel.project_dir%/var/app.db#' .env.local
 
 # Set the maintainer label
 LABEL org.opencontainers.image.source=https://github.com/ruslanbay/wikisource-exporter \
