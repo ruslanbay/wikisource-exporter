@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 
 # Build arguments for metadata
-ARG BUILD_DATE="2025-03-12T18:58:36Z"
+ARG BUILD_DATE="2025-03-12T19:16:53Z"
 ARG BUILD_VERSION="3.1.0"
 ARG GITHUB_USER="ruslanbay"
 
@@ -28,7 +28,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
-WORKDIR /app
+WORKDIR /ws-export
 
 # Clone specific version of ws-export and setup the application
 RUN git clone --depth 1 --branch ${BUILD_VERSION} https://github.com/wikimedia/ws-export.git . && \
@@ -42,8 +42,9 @@ RUN git clone --depth 1 --branch ${BUILD_VERSION} https://github.com/wikimedia/w
 
 # Create a wrapper script for the app
 RUN printf '#!/bin/sh\n\
+cd /ws-export\n\
 mkdir -p /github/workspace/output\n\
-php ./bin/console app:export \\\n\
+php /ws-export/bin/console app:export \\\n\
   --title "$1" \\\n\
   --lang "$2" \\\n\
   --format "$3" \\\n\
