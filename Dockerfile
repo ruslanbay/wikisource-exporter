@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 
 # Build arguments for metadata
-ARG BUILD_DATE="2025-03-12T19:16:53Z"
+ARG BUILD_DATE="2025-03-12T19:30:33Z"
 ARG BUILD_VERSION="3.1.0"
 ARG GITHUB_USER="ruslanbay"
 
@@ -42,16 +42,25 @@ RUN git clone --depth 1 --branch ${BUILD_VERSION} https://github.com/wikimedia/w
 
 # Create a wrapper script for the app
 RUN printf '#!/bin/sh\n\
+OUTPUT_DIR="/github/workspace/output"\n\
+mkdir -p "$OUTPUT_DIR"\n\
 cd /ws-export\n\
-mkdir -p /github/workspace/output\n\
-php /ws-export/bin/console app:export \\\n\
+php bin/console app:export \\\n\
   --title "$1" \\\n\
   --lang "$2" \\\n\
   --format "$3" \\\n\
-  --path "/github/workspace/output/" \\\n\
+  --path "$OUTPUT_DIR" \\\n\
   $([ "$4" = "true" ] && echo "--nocredits") \\\n\
   $([ "$5" = "true" ] && echo "--nocache")\n\
-echo "output-path=/github/workspace/output" >> $GITHUB_OUTPUT\n' > /entrypoint.sh && \
+\n\
+# Check if file was created\n\
+if [ -d "$OUTPUT_DIR" ] && [ "$(ls -A "$OUTPUT_DIR")" ]; then\n\
+  echo "File created successfully"\n\
+  echo "output-path=$OUTPUT_DIR" >> "$GITHUB_OUTPUT"\n\
+else\n\
+  echo "Error: No output file was created"\n\
+  exit 1\n\
+fi\n' > /entrypoint.sh && \
     chmod +x /entrypoint.sh
 
 # Set metadata labels using build arguments
