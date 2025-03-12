@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     php-zip \
     php-curl \
     php-sysvsem \
+    php-xml \
     calibre \
     fontconfig \
     fonts-dejavu \
@@ -33,14 +34,13 @@ RUN git clone --depth 1 --branch 3.1.0 https://github.com/wikimedia/ws-export.gi
     chmod 777 var && \
     # Setup configuration
     cp config/config.dist.json config/config.json && \
-    sed -i 's/"database_url": ".*"/"database_url": "sqlite:\/\/\/%kernel.project_dir%\/var\/app.db"/' config/config.json
+    sed -i 's/"database_url": ".*"/"database_url": "sqlite:\/\/%kernel.project_dir%\/var\/app.db"/' config/config.json
 
 # Set the maintainer label
 LABEL org.opencontainers.image.source=https://github.com/ruslanbay/wikisource-exporter \
       org.opencontainers.image.description="Container for WikiSource Exporter" \
       org.opencontainers.image.licenses=GPL-3.0 \
       org.opencontainers.image.version="3.1.0" \
-      org.opencontainers.image.created="2025-03-12T15:41:54Z" \
       org.opencontainers.image.ref.name="3.1.0" \
       org.opencontainers.image.title="WikiSource Exporter" \
       org.opencontainers.image.vendor="ruslanbay"
