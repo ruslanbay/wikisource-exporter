@@ -23,28 +23,21 @@ inputs:
     required: false
     default: 'false'
 
-outputs:
-  output-path:
-    description: 'Path to the exported document'
-    value: ${{ steps.export.outputs.output-path }}
-
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/ruslanbay/wikisource-exporter:latest'
+  entrypoint: '/bin/sh'
   args:
-    - php
-    - ./bin/console
-    - app:export
-    - --lang
-    - ${{ inputs.lang }}
-    - --format
-    - ${{ inputs.format }}
-    - --title
-    - "${{ inputs.title }}"
-    - --path
-    - /github/workspace/output/
-    - ${{ inputs.nocredits == 'true' && '--nocredits' || '' }}
-    - ${{ inputs.nocache == 'true' && '--nocache' || '' }}
+    - -c
+    - |
+      mkdir -p /github/workspace/output && \
+      php ./bin/console app:export \
+        ${{ inputs.nocredits == 'true' && '--nocredits' || '' }} \
+        ${{ inputs.nocache == 'true' && '--nocache' || '' }} \
+        --lang "${{ inputs.lang }}" \
+        --format "${{ inputs.format }}" \
+        --title "${{ inputs.title }}" \
+        --path "/github/workspace/output/"
 
 branding:
   icon: 'book'
