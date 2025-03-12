@@ -1,0 +1,51 @@
+name: 'WikiSource Exporter'
+description: 'WikiSource Exporter is a tool for exporting Wikisource documents to many formats, such as EPUB or PDF'
+author: 'ruslanbay'
+
+inputs:
+  title:
+    description: 'Page title (e.g. Constitution_of_the_United_States_of_America)'
+    required: true
+  lang:
+    description: 'Language code: ru, en, de, fr, ...'
+    required: true
+    default: 'en'
+  format:
+    description: 'Output format: txt, epub, pdf'
+    required: true
+    default: 'txt'
+  nocredits:
+    description: 'Do not include the credits list in the exported document'
+    required: false
+    default: 'true'
+  nocache:
+    description: 'Do not cache anything (re-fetch all data)'
+    required: false
+    default: 'false'
+
+outputs:
+  output-path:
+    description: 'Path to the exported document'
+    value: ${{ steps.export.outputs.output-path }}
+
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/ruslanbay/wikisource-exporter:latest'
+  args:
+    - php
+    - ./bin/console
+    - app:export
+    - --lang
+    - ${{ inputs.lang }}
+    - --format
+    - ${{ inputs.format }}
+    - --title
+    - "${{ inputs.title }}"
+    - --path
+    - /github/workspace/output/
+    - ${{ inputs.nocredits == 'true' && '--nocredits' || '' }}
+    - ${{ inputs.nocache == 'true' && '--nocache' || '' }}
+
+branding:
+  icon: 'book'
+  color: 'blue'
