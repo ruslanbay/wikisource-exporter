@@ -24,9 +24,8 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-# Clone specific version of ws-export with verbose output
-RUN set -x && \
-    git clone --depth 1 --branch 3.1.0 https://github.com/wikimedia/ws-export.git . && \
+# Clone specific version of ws-export
+RUN git clone --depth 1 --branch 3.1.0 https://github.com/wikimedia/ws-export.git . && \
     # Install composer dependencies
     composer install --no-dev --no-interaction --prefer-dist && \
     # Setup database directory
@@ -37,10 +36,11 @@ RUN set -x && \
     sed -i 's/"database_url": ".*"/"database_url": "sqlite:\/\/\/%kernel.project_dir%\/var\/app.db"/' config/config.json
 
 # Set the maintainer label
-LABEL org.opencontainers.image.source=https://github.com/ruslanbay/wikisource-export \
-      org.opencontainers.image.description="Container for WikiSource export tool" \
+LABEL org.opencontainers.image.source=https://github.com/ruslanbay/wikisource-exporter \
+      org.opencontainers.image.description="Container for WikiSource Exporter" \
       org.opencontainers.image.licenses=GPL-3.0 \
       org.opencontainers.image.version="3.1.0" \
+      org.opencontainers.image.created="2025-03-12T15:41:54Z" \
       org.opencontainers.image.ref.name="3.1.0" \
-      org.opencontainers.image.title="WikiSource Export Tool" \
+      org.opencontainers.image.title="WikiSource Exporter" \
       org.opencontainers.image.vendor="ruslanbay"
