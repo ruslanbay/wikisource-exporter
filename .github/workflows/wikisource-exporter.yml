@@ -37,7 +37,7 @@ jobs:
     steps:
       - name: Export document
         id: export
-        uses: ruslanbay/wikisource-exporter@3.1.0
+        uses: ruslanbay/wikisource-exporter@latest
         with:
           title: ${{ inputs.title }}
           lang: ${{ inputs.lang }}
