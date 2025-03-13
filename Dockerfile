@@ -16,18 +16,22 @@ WORKDIR /ws-export
 RUN apt-get update && apt-get install -y \
     --no-install-recommends \
     --no-install-suggests \
-    php-cli \
-    php-intl \
-    php-sqlite3 \
-    php-zip \
-    php-curl \
-    php-sysvsem \
-    php-xml \
     calibre \
+    composer \
     fontconfig \
     fonts-dejavu \
-    composer \
+    fonts-freefont \
+    fonts-gubbi \
+    fonts-linuxlibertine \
+    fonts-opendyslexic \
     git \
+    php-cli \
+    php-curl \
+    php-intl \
+    php-sqlite3 \
+    php-sysvsem \
+    php-xml \
+    php-zip \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone specific version of ws-export and setup the application
@@ -71,7 +75,7 @@ fi\n' > /entrypoint.sh && \
 
 # Set metadata labels using build arguments
 LABEL org.opencontainers.image.title="WikiSource Exporter" \
-      org.opencontainers.image.description="Export Wikisource documents to TXT EPUB or PDF" \
+      org.opencontainers.image.description="Export Wikisource documents to TXT PDF EPUB MOBI RTF" \
       org.opencontainers.image.source="https://github.com/${GITHUB_USER}/wikisource-exporter" \
       org.opencontainers.image.created="${BUILD_DATE}" \
       org.opencontainers.image.version="${BUILD_VERSION}" \
