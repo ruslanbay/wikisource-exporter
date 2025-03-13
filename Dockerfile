@@ -48,15 +48,8 @@ set -e\n\
 OUTPUT_DIR="/github/workspace/output"\n\
 mkdir -p "$OUTPUT_DIR"\n\
 chmod 777 "$OUTPUT_DIR"\n\
-\n\
-# Debug info\n\
-echo "Current directory: $(pwd)"\n\
-echo "Output directory: $OUTPUT_DIR"\n\
-\n\
 # Run the export command from the correct directory\n\
 cd /ws-export\n\
-pwd\n\
-ls -la\n\
 php /ws-export/bin/console app:export \\\n\
   --title "$1" \\\n\
   --lang "$2" \\\n\
@@ -78,7 +71,7 @@ fi\n' > /entrypoint.sh && \
 
 # Set metadata labels using build arguments
 LABEL org.opencontainers.image.title="WikiSource Exporter" \
-      org.opencontainers.image.description="Container for WikiSource Exporter" \
+      org.opencontainers.image.description="Export Wikisource documents to TXT EPUB or PDF" \
       org.opencontainers.image.source="https://github.com/${GITHUB_USER}/wikisource-exporter" \
       org.opencontainers.image.created="${BUILD_DATE}" \
       org.opencontainers.image.version="${BUILD_VERSION}" \
