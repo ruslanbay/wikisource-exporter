@@ -5,6 +5,8 @@
 
 A GitHub Action that exports WikiSource documents to various formats (txt, pdf, epub, mobi, rtf) using the [ws-export](https://github.com/wikimedia/ws-export) tool.
 
+![wikisource-exporter](https://github.com/user-attachments/assets/f8abdf40-4497-47f9-a934-ff4553f745f7)
+
 ## Features
 
 - Export WikiSource documents to multiple formats (txt, pdf, epub, mobi, rtf)
