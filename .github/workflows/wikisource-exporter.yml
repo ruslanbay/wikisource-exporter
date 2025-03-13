@@ -19,7 +19,7 @@ on:
         required: true
         default: 'txt'
         type: choice
-        options: ['txt', 'epub', 'pdf']
+        options: ['txt', 'pdf', 'epub', 'mobi', 'rtf', 'epub-3', 'epub-2', 'htmlz', 'pdf-a4', 'pdf-a5', 'pdf-a6', 'pdf-letter']
       nocredits:
         description: 'Do not include the credits list in the exported document'
         required: false

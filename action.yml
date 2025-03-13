@@ -11,7 +11,7 @@ inputs:
     required: true
     default: 'en'
   format:
-    description: 'Output format: txt, epub, pdf'
+    description: 'Output format: epub, epub-3, epub-2, htmlz, mobi, pdf, pdf-a4, pdf-a5, pdf-a6, pdf-letter, rtf, txt'
     required: true
     default: 'txt'
   nocredits:
