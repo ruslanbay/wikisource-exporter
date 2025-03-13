@@ -3,11 +3,11 @@
 [![GitHub release](https://img.shields.io/github/v/release/ruslanbay/wikisource-exporter)](https://github.com/ruslanbay/wikisource-exporter/releases)
 [![License](https://img.shields.io/github/license/ruslanbay/wikisource-exporter)](LICENSE)
 
-A GitHub Action that exports WikiSource documents to various formats (txt, epub, pdf) using the [ws-export](https://github.com/wikimedia/ws-export) tool.
+A GitHub Action that exports WikiSource documents to various formats (txt, pdf, epub, mobi, rtf) using the [ws-export](https://github.com/wikimedia/ws-export) tool.
 
 ## Features
 
-- Export WikiSource documents to multiple formats (txt, epub, pdf)
+- Export WikiSource documents to multiple formats (txt, pdf, epub, mobi, rtf)
 - Support for multiple languages
 - Optional credits list inclusion
 - Caching support for faster exports
@@ -48,7 +48,7 @@ on:
         required: true
         default: 'txt'
         type: choice
-        options: ['txt', 'epub', 'pdf']
+        options: ['txt', 'pdf', 'epub', 'mobi', 'rtf', 'epub-3', 'epub-2', 'htmlz', 'pdf-a4', 'pdf-a5', 'pdf-a6', 'pdf-letter']
 
 jobs:
   export:
@@ -76,7 +76,7 @@ jobs:
 |-------|-------------|----------|---------|
 | `title` | Page title (e.g. Constitution_of_the_United_States_of_America) | Yes | - |
 | `lang` | Language code (e.g. en, ru, de, fr) | Yes | en |
-| `format` | Output format (txt, epub, pdf) | Yes | txt |
+| `format` | Output format (txt, pdf, epub, mobi, rtf) | Yes | txt |
 | `nocredits` | Do not include the credits list | No | true |
 | `nocache` | Do not cache anything (re-fetch all data) | No | false |
 
