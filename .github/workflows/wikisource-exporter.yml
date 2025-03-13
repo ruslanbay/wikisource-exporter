@@ -5,15 +5,15 @@ on:
   workflow_dispatch:
     inputs:
       title:
-        description: 'Page title (e.g. Constitution_of_the_United_States_of_America)'
+        description: 'Page title, e.g. Constitution_of_the_United_States_of_America'
         required: true
         default: 'Constitution_of_the_United_States_of_America'
       lang:
-        description: 'Language code'
+        description: 'Language code, e.g. en, ru, de, fr'
         required: true
         default: 'en'
-        type: choice
-        options: ['ru', 'en', 'de', 'fr']
+        # type: choice
+        # options: ['ru', 'en', 'de', 'fr']
       format:
         description: 'Output format'
         required: true
